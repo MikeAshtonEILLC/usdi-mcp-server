@@ -66,6 +66,15 @@ mcp = FastMCP(
 )
 
 
+@mcp.custom_route("/health", methods=["GET"])
+async def health(request):
+    # Plain, protocol-agnostic health check for load balancers/platform
+    # health checkers (Render, etc.) — separate from /mcp, which requires
+    # MCP-specific Accept headers and will 406 a naive GET.
+    from starlette.responses import PlainTextResponse
+    return PlainTextResponse("ok")
+
+
 def _get_web3() -> Web3:
     if not RPC_URL:
         raise RuntimeError(

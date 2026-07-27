@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: usdi-mcp
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: ALCHEMY_API_KEY
+        sync: false   # set this in the Render dashboard, not in this file
+    healthCheckPath: /mcp
